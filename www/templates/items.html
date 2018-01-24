@@ -1,0 +1,19 @@
+<ion-view title="Items" id="page4">
+  <ion-nav-title>
+      <span>{{lista.get('nombre')}}</span>
+    </ion-nav-title>
+  <ion-nav-buttons side="right" class="has-header">
+    <a class="button button-icon icon ion-android-add" href="#/articulo/{{lista.id}}/"></a>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <div>
+      <a class="item ite-body" ng-repeat="articulo in articulos" href="#/articulo/{{lista.id}}/{{articulo.id}}">
+        <img ng-if="articulo.contains('imagen')" ng-src="{{articulo.get('imagen')}}">
+        <h2>{{articulo.get('marca')}}</h2>
+        <p>{{articulo.get('precio')}}</p>
+      </a>
+      
+    </div>
+  </ion-content>
+</ion-view>
+

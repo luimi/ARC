@@ -1,0 +1,29 @@
+<ion-view title="Item" id="page5">
+  <ion-nav-buttons side="right" class="has-header">
+    <button class="button button-icon icon ion-android-checkmark-circle" ng-click="guardar()"></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <div ng-if="articulo" style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;" ng-click="capturar()">
+      <i class="icon ion-plus" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+    </div>
+    <form id="item-form3" class="list">
+      <label class="item item-input" id="item-input2">
+        <span class="input-label">Marca</span>
+        <input type="text" placeholder="" ng-model="datos.marca">
+      </label>
+      <label class="item item-input" id="item-input3">
+        <span class="input-label">Precio</span>
+        <input type="number" placeholder="" ng-model="datos.precio">
+      </label>
+      <label class="item item-input" id="item-textarea2">
+        <span class="input-label">Descripcion</span>
+        <textarea placeholder="" ng-model="datos.descripcion"></textarea>
+      </label>
+      <label class="item item-input" id="item-input4">
+        <span class="input-label">Lugar</span>
+        <input type="text" placeholder="" ng-model="datos.lugar">
+      </label>
+    </form>
+    <button class="button button-assertive button-block" ng-if="articulo" ng-click="borrar()">Borrar</button>
+  </ion-content>
+</ion-view>

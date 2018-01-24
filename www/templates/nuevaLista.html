@@ -1,0 +1,14 @@
+<ion-view title="Nueva lista" id="page3">
+  
+  <ion-content padding="true" class="has-header">
+    <form id="nuevaLista-form2" class="list">
+      <label class="item item-input" id="nuevaLista-input1">
+        <span class="input-label">Nombre</span>
+        <input type="text" placeholder="Nombre de la lista" ng-model="nuevo.nombre">
+      </label>
+      <label class="item item-input" id="nuevaLista-textarea1">
+        <span class="input-label">Descripcion</span><textarea placeholder="Breve descripción de lo que estas buscando" ng-model="nuevo.descripcion"></textarea></label>
+    </form>
+    <button id="nuevaLista-button3" class="button button-positive button-block" ng-click="guardar()">Guardar</button>
+  </ion-content>
+</ion-view>

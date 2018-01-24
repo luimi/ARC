@@ -1,0 +1,18 @@
+<ion-view title="Tu lista" hide-back-button="true" id="page2">
+  <ion-nav-buttons side="right" class="has-header">
+    <button class="button button-icon icon ion-plus" ng-click="nuevo()"></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <label class="item item-input" id="tuLista-search1">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="search" placeholder="Buscar">
+    </label>
+    <div class="list" >
+      <a class="item item-icon-right" ng-repeat="lista in listas" href="#/articulos/{{lista.id}}">
+        <h2>{{lista.get('nombre')}}</h2>
+        <p>{{lista.get('descripcion')}}</p>
+        <i class="button button-icon icon ion-trash-a" ng-click="borrar($index)"></i>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>
