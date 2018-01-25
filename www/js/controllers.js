@@ -1,9 +1,11 @@
 angular.module('app.controllers', [])
   
-.controller('loginCtrl', ['$scope', '$stateParams','$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams','$state','$ionicPopup',
+// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $state) {
+function ($scope, $stateParams, $state,$ionicPopup) {
+	$scope.usuario={};
 	continuar=function(){
 		$state.go('tuLista');
 	}
@@ -11,13 +13,46 @@ function ($scope, $stateParams, $state) {
 		continuar();
 	}
 	
-	$scope.entrar=function(){
+	$scope.facebook=function(){
 		Parse.FacebookUtils.logIn(null, {
 		  success: function(user) {
 		    continuar();
 		  },
 		  error: function(user, error) {
-		  	alert("Es necesario entrar con Facebook");
+		  	$ionicPopup.alert({
+		  		title: 'Login',
+         		template: 'Cancelaste entrar con Facebook'
+		  	});
+		  	//alert("");
+		  }
+		});
+	}
+	$scope.registrar=function(){
+		var user = new Parse.User();
+		user.set("username", $scope.usuario.nombre);
+		user.set("password", $scope.usuario.clave);
+		user.signUp(null, {
+		  success: function(user) {
+		    continuar();
+		  },
+		  error: function(user, error) {
+		    $ionicPopup.alert({
+		  		title: 'Login',
+         		template: 'Usuario ya existe'
+		  	});
+		  }
+		});
+	}
+	$scope.entrar=function(){
+		Parse.User.logIn($scope.usuario.nombre, $scope.usuario.clave, {
+		  success: function(user) {
+		    continuar();
+		  },
+		  error: function(user, error) {
+		    $ionicPopup.alert({
+		  		title: 'Login',
+         		template: 'Usuario y/o contraseña invalidos'
+		  	});
 		  }
 		});
 	}
@@ -179,17 +214,30 @@ function ($scope, $stateParams,cargarLista,$state,Objeto,$ionicPopup,$ionicHisto
 	      sourceType: Camera.PictureSourceType.CAMERA,
 	      allowEdit: true,
 	      encodingType: Camera.EncodingType.JPEG,
-	      targetWidth: 640,
-	      targetHeight: 640,
+	      /*targetWidth: 1024,
+	      targetHeight: 1024,*/
 	      popoverOptions: CameraPopoverOptions,
 	      saveToPhotoAlbum: false,
 		  correctOrientation:true
 	    };
 	    $cordovaCamera.getPicture(options).then(function(imageData) {
-	      image.src = "data:image/jpeg;base64," + imageData;
-
+	      var file = new Parse.File($scope.articulo.id+".jpg", 
+	      	{ base64: "data:image/jpeg;base64," + imageData });
+	      $scope.articulo.set("foto",file);
+	      $scope.articulo.save(null,{
+	      	success:function(){
+	      		$scope.articulo.fetch({
+	      			success:function(){
+	      				$scope.$apply();
+	      			}
+	      		})
+	      	}
+	      });
 	    }, function(err) {
-	    	console.log(err);
+	    	$ionicPopup.alert({
+		  		title: 'Camara',
+         		template: err
+		  	});
 	    });
 	}
 
