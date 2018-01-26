@@ -16,7 +16,7 @@ angular.module('app.routes', [])
   })
 
   .state('tuLista', {
-    url: '/lista',
+    url: '/lista/{id}',
     templateUrl: 'templates/tuLista.html',
     controller: 'tuListaCtrl'
   })

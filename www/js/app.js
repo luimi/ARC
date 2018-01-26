@@ -8,24 +8,7 @@
 
 Parse.initialize("5WcHVV8jpkEfQhiMn6sBj3oIN0rOHByWJmA0VAGa","ABF7H2qVeTljjBYwecwQiqiZQFlajzYbBPwltoGi");
 Parse.serverURL = 'https://parseapi.back4app.com/';
-window.fbAsyncInit = function() {
-  Parse.FacebookUtils.init({ // this line replaces FB.init({
-    appId      : '179355272822360', // Facebook App ID
-    status     : true,  // check Facebook Login status
-    cookie     : true,  // enable cookies to allow Parse to access the session
-    xfbml      : true,  // initialize Facebook social plugins on the page
-    version    : 'v2.11' // point to the latest Facebook Graph API version
-  });
 
-      // Run code after the Facebook SDK is loaded.
-};
-  (function(d, s, id){
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "https://connect.facebook.net/en_US/sdk.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services','ngCordova'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){

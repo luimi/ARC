@@ -9,24 +9,11 @@ function ($scope, $stateParams, $state,$ionicPopup) {
 	continuar=function(){
 		$state.go('tuLista');
 	}
-	if(Parse.User.current()){
-		continuar();
-	}
-	
-	$scope.facebook=function(){
-		Parse.FacebookUtils.logIn(null, {
-		  success: function(user) {
-		    continuar();
-		  },
-		  error: function(user, error) {
-		  	$ionicPopup.alert({
-		  		title: 'Login',
-         		template: 'Cancelaste entrar con Facebook'
-		  	});
-		  	//alert("");
-		  }
-		});
-	}
+	$scope.$on('$ionicView.beforeEnter',function(){
+		if(Parse.User.current()){
+			continuar();
+		}
+	});
 	$scope.registrar=function(){
 		var user = new Parse.User();
 		user.set("username", $scope.usuario.nombre);
@@ -58,15 +45,20 @@ function ($scope, $stateParams, $state,$ionicPopup) {
 	}
 }])
    
-.controller('tuListaCtrl', ['$scope', '$stateParams', '$state','$ionicPopup', '$timeout',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('tuListaCtrl', ['$scope', '$stateParams', '$state','$ionicPopup', '$timeout','Objeto','$window',
+// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state ,$ionicPopup, $timeout) {
+function ($scope, $stateParams,$state ,$ionicPopup, $timeout,Objeto,$window) {
 	$scope.$on('$ionicView.beforeEnter',function(){
 		listar();
 	});
+	var current=Parse.User.current();
+	var id=$state.params.id;
 	var listar=function(){
-		new Parse.Query("Lista").equalTo("usuario",Parse.User.current()).find({
+		new Parse.Query("Lista")
+		.equalTo("usuario",current?current:(id?Objeto.id("_User",id):""))
+		.find({
 			success:function(results){
 				$scope.listas=results;
 				$scope.$apply();
@@ -74,7 +66,8 @@ function ($scope, $stateParams,$state ,$ionicPopup, $timeout) {
 		});
 	}
 	$scope.nuevo=function(){
-		$state.go('nuevaLista');
+		if(Parse.User.current())
+			$state.go('nuevaLista');
 	}
 	$scope.borrar=function(index){
 		$ionicPopup.confirm({
@@ -90,20 +83,24 @@ function ($scope, $stateParams,$state ,$ionicPopup, $timeout) {
 			}
 		});
 	}
+	$scope.compartir=function(){
+		console.log($window);
+		$window.open("http://lui2mi.rf.gd/ARC/#/lista/"+Parse.User.current().id, "_blank");
+	}
 
 }])
    
 .controller('nuevaListaCtrl', ['$scope', '$stateParams','Objeto','$state',
-	'$ionicHistory',
+	'$ionicHistory','ACL',
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,Objeto,$state,$ionicHistory) {
+function ($scope, $stateParams,Objeto,$state,$ionicHistory,ACL) {
 	$scope.nuevo={};
 
 	$scope.guardar=function(){
 		if($scope.nuevo.nombre && $scope.nuevo.descripcion){
 			$scope.nuevo.usuario=Parse.User.current();
-			Objeto("Lista").save($scope.nuevo,{success:function(obj){
+			Objeto.generico("Lista").setACL(ACL()).save($scope.nuevo,{success:function(obj){
 				$ionicHistory.goBack();
 			}});
 		}else{
@@ -138,21 +135,21 @@ function ($scope, $stateParams,$state,cargarLista,$ionicHistory) {
 		$ionicHistory.goBack();
 	}
 	$scope.nuevo=function(){
-		$state.go('item',{lista:$scope.lista.id});
+		if(Parse.User.current())
+			$state.go('item',{lista:$scope.lista.id});
 	}
 
 
 }])
    
 .controller('itemCtrl', ['$scope', '$stateParams', 'cargarLista','$state','Objeto',
-	'$ionicPopup','$ionicHistory','$cordovaCamera',
+	'$ionicPopup','$ionicHistory','$cordovaCamera','ACL',
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams,cargarLista,$state,Objeto,$ionicPopup,$ionicHistory,
-	$cordovaCamera) {
+	$cordovaCamera,ACL) {
 	$scope.datos={};
-	console.log($cordovaCamera);
 	var cargarArticulo=function(){
 		new Parse.Query("Articulo").get($state.params.id,{
 			success:function(articulo){
@@ -184,7 +181,7 @@ function ($scope, $stateParams,cargarLista,$state,Objeto,$ionicPopup,$ionicHisto
 			$scope.articulo.save();
 		}else{
 			$scope.datos.lista=$scope.lista;
-			Objeto("Articulo").save($scope.datos,{
+			Objeto.generico("Articulo").setACL(ACL()).save($scope.datos,{
 				success:function(obj){
 					obj.fetch();
 					$scope.articulo=obj;

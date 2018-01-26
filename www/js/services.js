@@ -21,9 +21,25 @@ angular.module('app.services', [])
 		}
 	}
 }])
+.factory('ACL', [function(){
+	return function(){
+		var acl=new Parse.ACL();
+		acl.setPublicReadAccess(true);
+		acl.setWriteAccess(Parse.User.current(), true);
+		return acl;
+	}
+}])
 .factory('Objeto', [function(){
-	return function(clase){
-	    var Generico = Parse.Object.extend(clase);
-	    return new Generico();
-	  }
+	return {
+		generico:function(clase){
+			var Generico = Parse.Object.extend(clase);
+			return new Generico();
+		},
+		id:function(clase,id){
+			var Generico = Parse.Object.extend(clase);
+			var generico =new Generico();
+			generico.id=id;
+			return generico
+		}
+	}
 }]);

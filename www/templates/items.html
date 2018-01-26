@@ -6,10 +6,12 @@
     <a class="button button-icon icon ion-android-add" href="#/articulo/{{lista.id}}/"></a>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <a class="item item-body" ng-repeat="articulo in articulos" href="#/articulo/{{lista.id}}/{{articulo.id}}">
-      <img ng-if="articulo.has('foto')" ng-src="{{articulo.get('foto').url()}}" style="max-height: 100px" align="middle">
-      <h2 style="text-align: center;">{{articulo.get('marca')}}</h2>
-      <p style="text-align: center;">{{articulo.get('precio')}}</p>
+    
+    <a class="item item-thumbnail-left" ng-repeat="articulo in articulos" href="#/articulo/{{lista.id}}/{{articulo.id}}">
+      <img ng-if="articulo.has('foto')" ng-src="{{articulo.get('foto').url()}}">
+      <h2>{{articulo.get('marca')}}</h2>
+      <p>${{articulo.get('precio') | number:0}}</p>
+      <p>{{articulo.get('lugar')}}</p>
     </a>
   </ion-content>
 </ion-view>
