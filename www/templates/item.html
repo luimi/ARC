@@ -1,6 +1,6 @@
 <ion-view title="Item" id="page5">
-  <ion-nav-buttons side="right" class="has-header">
-    <button class="button button-icon icon ion-android-checkmark-circle" ng-click="guardar()"></button>
+  <ion-nav-buttons side="right" class="has-header" >
+    <button ng-if="esUsuario" class="button button-icon icon ion-android-checkmark-circle" ng-click="guardar()"></button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <div ng-if="articulo && !articulo.has('foto')" style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;" ng-click="capturar()">
@@ -25,6 +25,6 @@
         <input type="text" placeholder="" ng-model="datos.lugar">
       </label>
     </form>
-    <button class="button button-assertive button-block" ng-if="articulo" ng-click="borrar()">Borrar</button>
+    <button class="button button-assertive button-block" ng-if="articulo && esUsuario" ng-click="borrar()">Borrar</button>
   </ion-content>
 </ion-view>

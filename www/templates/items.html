@@ -2,8 +2,8 @@
   <ion-nav-title>
       <span>{{lista.get('nombre')}}</span>
     </ion-nav-title>
-  <ion-nav-buttons side="right" class="has-header">
-    <a class="button button-icon icon ion-android-add" href="#/articulo/{{lista.id}}/"></a>
+  <ion-nav-buttons side="right" class="has-header" >
+    <a ng-if="esUsuario" class="button button-icon icon ion-android-add" href="#/articulo/{{lista.id}}/"></a>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     
