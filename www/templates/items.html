@@ -1,10 +1,14 @@
 <ion-view title="Items" id="page4">
-  <ion-nav-title>
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button></ion-nav-back-button>
+    <ion-nav-title>
       <span>{{lista.get('nombre')}}</span>
-    </ion-nav-title>
-  <ion-nav-buttons side="right" class="has-header" >
-    <a ng-if="esUsuario" class="button button-icon icon ion-android-add" href="#/articulo/{{lista.id}}/"></a>
-  </ion-nav-buttons>
+      </ion-nav-title>
+    <ion-nav-buttons side="right" class="has-header" >
+      <a ng-if="esUsuario" class="button button-icon icon ion-android-add" href="#/articulo/{{lista.id}}/"></a>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  
   <ion-content padding="true" class="has-header">
     
     <a class="item item-thumbnail-left" ng-repeat="articulo in articulos" href="#/articulo/{{lista.id}}/{{articulo.id}}">

@@ -1,7 +1,10 @@
-<ion-view title="Tu lista" hide-back-button="true">
-  <ion-nav-buttons side="right" class="has-header" >
-    <button  ng-if="esUsuario" class="button button-icon icon ion-plus" ng-click="nuevo()"></button>
-  </ion-nav-buttons>
+<ion-view title="Tu lista" hide-back-button="true" >
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-buttons side="right" class="has-header" >
+      <button  ng-if="esUsuario" class="button button-icon icon ion-plus" ng-click="nuevo()"></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <!---->
   <ion-content padding="true" class="has-header">
     <a class="ion-share item" ng-click="compartir()"> Compartir</a>
     <label class="item item-input" id="tuLista-search1">
