@@ -10,8 +10,11 @@
   </ion-nav-bar>
   
   <ion-content padding="true" class="has-header">
-    
-    <a class="item item-thumbnail-left" ng-repeat="articulo in articulos" href="#/articulo/{{lista.id}}/{{articulo.id}}">
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="search" placeholder="Buscar" ng-model="buscar">
+    </label>
+    <a class="item item-thumbnail-left" ng-repeat="articulo in articulos | articuloFilter:buscar" href="#/articulo/{{lista.id}}/{{articulo.id}}">
       <img ng-if="articulo.has('foto')" ng-src="{{articulo.get('foto').url()}}">
       <h2>{{articulo.get('marca')}}</h2>
       <p>${{articulo.get('precio') | number:0}}</p>

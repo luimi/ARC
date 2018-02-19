@@ -1,21 +1,29 @@
-<ion-view title="Login" hide-nav-bar="true" id="page1">
+<ion-view title="Login" hide-nav-bar="true">
   <ion-content padding="true" class="manual-ios-statusbar-padding">
-    <h1 id="login-heading1" style="color:#000000;text-align:center;">ARC</h1>
-    <h5 id="login-heading2" style="color:#000000;text-align:center;">Averigua , Registra y Compara</h5>
-    <div class="list">
-	  <label class="item item-input">
-	    <span class="input-label">Usuario</span>
-	    <input type="text" ng-model="usuario.nombre">
-	  </label>
-	  <label class="item item-input">
-	    <span class="input-label">Contraseña</span>
-	    <input type="password" ng-model="usuario.clave">
-	  </label>
-	  <div class="row">
-	  	<a class="button button-positive button-block col-50" ng-click="entrar()">Iniciar sesion</a>
-	  	<a class="button button-positive button-block col-50" ng-click="registrar()">Registrarse</a>
-	  </div>
-	  
-	</div>
+  	<div >
+  		<img src="img/logo.png" style="max-width: 100% ; max-height: 450px; display: block; margin: 0 auto" >
+  	</div>
+  	<div>
+
+  		<h5 id="login-heading2" style="color:#000000;text-align:center;">Averigua , Registra y Compara</h5>
+	    <form name="login">
+		  <label class="item item-input">
+		    <span class="input-label">Usuario</span>
+		    <input type="text" ng-model="usuario.nombre" name="nombre" required>
+		  </label>
+		  <label class="item item-input">
+		    <span class="input-label">Contraseña</span>
+		    <input type="password" ng-model="usuario.clave" name="clave" required>
+		  </label>
+		  <div class="row">
+		  	<a class="button button-positive button-block col-50" ng-click="entrar()"
+		  	ng-disabled="login.nombre.$invalid || login.clave.$invalid">Iniciar sesion</a>
+		  	<a class="button button-positive button-block col-50" ng-click="registrar()" ng-disabled="login.nombre.$invalid || login.clave.$invalid">Registrarse</a>
+
+		  </div>
+		</form>
+  	</div>
+  	
+    
   </ion-content>
 </ion-view>

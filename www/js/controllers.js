@@ -15,6 +15,7 @@ function ($scope, $stateParams, $state,$ionicPopup,$ionicLoading) {
 		}
 	});
 	$scope.registrar=function(){
+
 		$ionicLoading.show();
 		var user = new Parse.User();
 		user.set("username", $scope.usuario.nombre);
@@ -69,6 +70,7 @@ function ($scope, $stateParams,$state ,$ionicPopup, $timeout,Objeto,$window,$ion
 		$ionicLoading.show();
 		new Parse.Query("Lista")
 		.equalTo("usuario",current?current:(id?Objeto.id("_User",id):""))
+		.ascending("nombre")
 		.find({
 			success:function(results){
 				$ionicLoading.hide();
